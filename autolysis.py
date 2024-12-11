@@ -1,8 +1,9 @@
 # Importing the necessary libraries
 import pandas as pd
+import os
+os.system("!pip install requests")
 import requests
 import sys
-import os
 import shutil
 
 # Change the current working directory
