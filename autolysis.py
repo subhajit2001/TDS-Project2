@@ -15,7 +15,7 @@ except FileExistsError:
 
 # Importing the dataset
 df = pd.read_csv(sys.argv[1],encoding='latin-1')
-f = open(sys.argv[1], "r")
+f = open(sys.argv[1], "r", encoding='latin-1')
 data = f.read()
 
 # Initialization of proxy token along with the url
