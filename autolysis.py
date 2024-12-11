@@ -18,7 +18,7 @@ df = pd.read_csv(sys.argv[1],encoding='latin-1')
 df.head()
 
 # Initialization of proxy token along with the url
-key = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjIxZjEwMDM5NDVAZHMuc3R1ZHkuaWl0bS5hYy5pbiJ9.zTEDW_5jyKCxRGDPmmGmOiihUQWi6I7OcsRer4xwFWk"
+key = os.environ["AIPROXY_TOKEN"]
 headers = {"Authorization": f"Bearer {key}"}
 url = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
 
