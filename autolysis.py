@@ -144,7 +144,6 @@ except:
 	print("Error doing categorical analysis")
 
 # Generating a README.md file
-os.chdir("..")
 with open('README.md', 'w+') as f:
     f.write(summarization_response)
     f.write(correlation_response)
