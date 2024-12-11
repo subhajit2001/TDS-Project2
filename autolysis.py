@@ -5,8 +5,6 @@ import httpx
 import sys
 import shutil
 
-print(sys.argv[1])
-
 # Change the current working directory
 try:
     os.mkdir(sys.argv[1].split(".")[0])
@@ -17,7 +15,8 @@ except FileExistsError:
 
 # Importing the dataset
 df = pd.read_csv(sys.argv[1],encoding='latin-1')
-df.head()
+f = open(sys.argv[1], "r")
+data = f.read()
 
 # Initialization of proxy token along with the url
 key = os.environ["AIPROXY_TOKEN"]
@@ -75,7 +74,6 @@ correlation_response = llm_response(corr_dataset, prompt=prompt)
 print("Done with correlation")
 
 # Changing the directory for saving the files
-shutil.copy(sys.argv[1],'./'+sys.argv[1].split(".")[0])
 os.chdir(sys.argv[1].split(".")[0])
 
 # Creation of the prompt for generating the heatmap of the correlation matrix
@@ -89,6 +87,9 @@ llm_res_actual = llm_res.split("```")
 for i in range(len(llm_res_actual)):
 	if llm_res_actual[i].count("python")>0:
 		llm_res_final = llm_res_actual[i].replace("python","")
+            
+with open(sys.argv[1], 'w') as f_input:
+      f_input.write(data)
 
 with open('corr_heatmap.py', 'w+') as f_heatmap:
 	f_heatmap.write(llm_res_final)
