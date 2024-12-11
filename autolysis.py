@@ -5,6 +5,8 @@ import httpx
 import sys
 import shutil
 
+print(sys.argv[1])
+
 # Change the current working directory
 try:
     os.mkdir(sys.argv[1].split(".")[0])
