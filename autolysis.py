@@ -1,8 +1,7 @@
 # Importing the necessary libraries
 import pandas as pd
 import os
-os.system("!pip install requests")
-import requests
+import httpx
 import sys
 import shutil
 
@@ -25,22 +24,23 @@ url = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
 
 # Creation of an LLM response function
 def llm_response(dataset_df, prompt):
-	summary_dataset_csv = dataset_df.to_string()
-	data = {
-	    'model': 'gpt-4o-mini', 
-	    'messages':[
-		{"role":"system", "content":"You are a helpful assistant."},
-		{"role":"user",  "content": prompt}
-		]
-	}
+    summary_dataset_csv = dataset_df.to_string()
+    data = {
+        'model': 'gpt-4o-mini', 
+        'messages':[
+        {"role":"system", "content":"You are a helpful assistant."},
+        {"role":"user",  "content": prompt}
+        ]
+    }
 
-	data_response = requests.post(url, headers=headers, json=data).json()
+    timeout = httpx.Timeout(10.0, read=None)
+    data_response = httpx.post(url, headers=headers, json=data, timeout=timeout).json()
 
-	with open('file.txt', "a") as f:
-		f.write(str(data_response))
-		f.write("\n\n\n")
+    with open('file.txt', "a") as f:
+        f.write(str(data_response))
+        f.write("\n\n\n")
 
-	return data_response['choices'][0]['message']['content']
+    return data_response['choices'][0]['message']['content']
 
 # Creating the string for columns names to pass to the prompt
 string_columns = ""
